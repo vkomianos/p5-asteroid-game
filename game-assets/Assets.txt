@@ -1,0 +1,5 @@
+Asteroid image: https://freesvg.org/asteroid-no-shading
+Spaceship's image: https://www.seekpng.com/ipng/u2q8a9i1t4y3e6u2_spaceship-cartoon-clipart-library-clipart-rocket/
+Background image: https://commons.wikimedia.org/wiki/File:Buisson_crater_and_satellite_craters_AS12-51-7557.jpg
+Spaceship's engine sound: https://freesound.org/people/EnduringAutomotive/sounds/170248/
+Explosion sound: https://freesound.org/people/derplayer/sounds/587189/
