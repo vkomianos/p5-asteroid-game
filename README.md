@@ -1,2 +1,6 @@
 # p5-asteroid-game
 Another version of the Asteroids game. Developed for the Interactive Multimedia course at the Dept. of Audio and Visual Arts, Corfu, Greece.
+
+The game is intended to be used by the course students as a template which they can modify to make their own 2D game.
+
+The game uses the p5 javascript library (https://p5js.org/) and the v1.5.0 is included in this project (downloaded from https://github.com/processing/p5.js/releases/download/v1.5.0/p5.min.js).
