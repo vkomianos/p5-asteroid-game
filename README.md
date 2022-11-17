@@ -1,5 +1,8 @@
 # Branch information
 Added touch screen controls.
+- Minor changes on game.html
+- Minor changes on js/game-code.html
+- New code file: js/touch-screen-controls.js
 ![Gameplay](/docs/touch-controls.jpg)
 
 # P5 asteroids game
