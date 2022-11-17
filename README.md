@@ -1,3 +1,7 @@
+# Branch information
+Added touch screen controls.
+![Gameplay](/docs/touch-controls.jpg)
+
 # P5 asteroids game
 Another version of the Asteroids game. Developed for the [Interactive Multimedia course] (https://avarts.ionio.gr/en/studies/undergraduate/courses-descriptions/ava341/) at the Dept. of Audio and Visual Arts, Corfu, Greece. The game is intended to be used by the course students as a template which they can modify to make their own 2D game. The game is developed for PC and browser.
 
