@@ -229,6 +229,8 @@
 			spaceShipLives = new SpaceShipLives();
 			createCanvas(1280, 591); // canvas size tied to the background-image
 			asteroidSwarm = new AsteroidSwarm(); // it is going to handle the asteroids
+			
+			setupTouchScreenControls();
 		}
 		
 		function draw() 
@@ -242,6 +244,8 @@
 			spaceShipLives.display();
 						
 			showMessages(); // displays messages (if needed) depending on the game state
+			
+			drawTouchScreenControls();
 			
 			if (startGame && !gameOver && startOnce) // begin a new game
 			{
@@ -278,6 +282,8 @@
 				{
 					spaceship.move(1);
 				}
+				
+				spaceship.move(getTouchDirectionControl());
 			}
 		}
 				
