@@ -11,7 +11,7 @@ Another version of the Asteroids game. Developed for the [Interactive Multimedia
 ![Gameplay](/docs/p5-asteroids-gameplay.gif)
 
 ## Gameplay
-Player uses the left/right arrow of the PC's keyboard to move the spaceship and avoid the asteroids. The game becomes more difficult as player keeps playing by adding more asteroids. Asteroids have varying speed. The more asteroids the player survives the greater score he/she gets.
+Player uses the left/right arrow on the touch controller displayed to move the spaceship and avoid the asteroids. The game becomes more difficult as player keeps playing by adding more asteroids. Asteroids have varying speed. The more asteroids the player survives the greater score he/she gets.
 
 ## Project/code structure
 The game's code resided in js/game-code.js. It is loaded by game.html and it depends on js/p5.min.js as the P5 library is used for graphics and input operations. It is organized in 4 classes of which 3 are tied to the game entities (Asteroid, AsteroidSwarm, SpaceShip) and one (SpaceShipLives) is used to display player's lives.
