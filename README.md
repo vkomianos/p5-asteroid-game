@@ -40,7 +40,8 @@ The folder game-assets contains the images and sounds used in the game.
 Get the [repository] (https://github.com/vkomianos/p5-asteroids-game.git).
 
 ## Play online (for mobile devices)
-You can play the game [online] (https://users.ionio.gr/~vkomianos/projects/p5-asteroids-game-touch-screen-controls/game.html))
+https://users.ionio.gr/~vkomianos/projects/p5-asteroids-game-touch-and-orientation-controls/game.html
+
 
 ## Libraries used
 The game uses the [p5 javascript library] (https://p5js.org/) and the [v1.5.0] (https://github.com/processing/p5.js/releases/download/v1.5.0/p5.min.js)is included in this project.
