@@ -3,6 +3,8 @@ Added orientation controls (use on mobile devices).
 - Minor changes on game.html
 - Minor changes on js/game-code.html
 - New code file: js/orientation-controls.js
+
+
 ![Gameplay](/docs/p5-asteroids-gameplay-compressed.gif)
 
 # P5 asteroids game
