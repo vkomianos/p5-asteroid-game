@@ -1,9 +1,9 @@
 # Branch information
-Added touch screen controls.
+Added orientation controls (use on mobile devices). 
 - Minor changes on game.html
 - Minor changes on js/game-code.html
-- New code file: js/touch-screen-controls.js
-![Gameplay](/docs/touch-controls.jpg)
+- New code file: js/orientation-controls.js
+![Gameplay](/docs/p5-asteroids-gameplay-compressed.gif)
 
 # P5 asteroids game
 Another version of the Asteroids game. Developed for the [Interactive Multimedia course] (https://avarts.ionio.gr/en/studies/undergraduate/courses-descriptions/ava341/) at the Dept. of Audio and Visual Arts, Corfu, Greece. The game is intended to be used by the course students as a template which they can modify to make their own 2D game. The game is developed for PC and browser.
