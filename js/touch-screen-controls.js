@@ -7,7 +7,7 @@ let controllerPause;
 let leftIsPressed;
 let rightIsPressed;
 
-document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('contextmenu', event => event.preventDefault()); // disable context menu that would appear on long taps
 
 function setupTouchScreenControls()
 {
