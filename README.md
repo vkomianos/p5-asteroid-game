@@ -1,5 +1,5 @@
 # P5 asteroids game
-Another version of the Asteroids game. Developed for the <a href="https://avarts.ionio.gr/en/studies/undergraduate/courses-descriptions/ava341/">Interactive Multimedia course</a> at the Dept. of <a href="https://avarts.ionio.gr">Audio and Visual Arts</a>, Corfu, Greece. The game is intended to be used by the course students as a template which they can modify to make their own 2D game. The game is developed for PC and browser.
+Another version of the Asteroids game. Developed for the <a href="https://avarts.ionio.gr/en/studies/undergraduate/courses-descriptions/ava341/" target="_blank">Interactive Multimedia course</a> at the Dept. of <a href="https://avarts.ionio.gr" target="_blank">Audio and Visual Arts</a>, Corfu, Greece. The game is intended to be used by the course students as a template which they can modify to make their own 2D game. The game is developed for PC and browser.
 
 ![Gameplay](/docs/p5-asteroids-gameplay.gif)
 
