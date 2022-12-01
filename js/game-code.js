@@ -222,6 +222,7 @@
 				}
 			}
 
+			/*
 			checkForDetonation(missiles)
 			{
 				// not very precise yet 
@@ -236,7 +237,8 @@
 						}
 					}
 				}
-			}	
+			}
+			*/
 		}
 		
 		class SpaceShip
@@ -281,6 +283,7 @@
 				this.engineSound.stop();
 			}
 			
+			/*
 			addMissiles(howMany)
 			{
 				this.missiles+= howMany;
@@ -296,6 +299,7 @@
 					return missile;
 				}
 			}
+			*/
 		}
 		
 		class SpaceShipLives
@@ -352,9 +356,11 @@
 		let gameOver = false;
 		let paused = false;
 		
+		/*
 		let missileImage;
 		let missiles = [];
 		let missilePack;
+		*/
 		
 		/*
 			P5 functions preload(), setup(), draw() and keyPressed() are used
@@ -365,8 +371,8 @@
 			asteroidImage = loadImage("game-assets/asteroid-2.png"); // load once and the pass to Asteroid so that will not load each time an Asteroid is created
 			spaceship = new SpaceShip();
 			
-			missileImage = loadImage("game-assets/missile-2.png");
-			missilePack = new MissilePack();
+			//missileImage = loadImage("game-assets/missile-2.png");
+			//missilePack = new MissilePack();
 		}
 		
 		function setup() 
@@ -412,10 +418,12 @@
 					spaceShipLives.reduceOneLive();
 				}
 				
+				/*
 				if (asteroidSwarm.checkForDetonation(missiles)) // check for collisions - if any then reduceOneLive
 				{	
 					//spaceShipLives.reduceOneLive();
 				}
+				*/
 				
 				if (spaceShipLives.livesLeft == 0) // defines the player loses 
 					gameOver = true;
@@ -430,13 +438,8 @@
 					spaceship.move(1);
 				}
 				
-				/*
-				if (keyIsDown(32)) // space is pressed
-				{
-					missiles.push(spaceship.fireMissile());
-				}
-				*/
 				
+				/*
 				missilePack.newMissilePack(asteroidSwarm.asteroidsPassed);
 				missilePack.display();
 				missilePack.checkForCollection(spaceship);
@@ -451,18 +454,20 @@
 						i--;
 					}
 				}
-				
+				*/
 			}
 		}
 				
 		function keyPressed()
 		{
+			/*
 			if (keyIsDown(32)) // space is pressed - fire a missile
 			{
 				let temp = spaceship.fireMissile();
 				if (temp != undefined)
 					missiles.push(temp);
 			}
+			*/
 			
 			if (keyCode == 78) // n is pressed - New game
 			{
@@ -491,7 +496,7 @@
 			textSize(30);
 			text("Score: " + asteroidSwarm.asteroidsPassed, 30, 135); // Score is shown
 			
-			text("Missiles: " + spaceship.missiles, 1120, 60); // Score is shown
+			//text("Missiles: " + spaceship.missiles, 1120, 60); // Score is shown
 		
 			if (!startGame)
 				rect(280, 280, 680, 140); // rectangle (window) to show the message to start game
@@ -505,7 +510,7 @@
 				text('Press N to start a new game.', 300, 300, 800, 200);
 				textSize(25);
 				text('Use the left and right arrows to avoid the asteroids.', 340, 360, 800, 200);
-				text('Get the missiles and fire by pressing the Space bar!', 340, 390, 800, 200);
+				//text('Get the missiles and fire by pressing the Space bar!', 340, 390, 800, 200);
 			}
 			
 			if (gameOver)
