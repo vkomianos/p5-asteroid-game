@@ -283,8 +283,8 @@
 					spaceship.move(1);
 				}
 				
-				spaceship.move(getTouchDirectionControl());
-				spaceship.move(getOrientationControls());
+				spaceship.move(getTouchDirectionControl()); // get the touch controls - if any
+				spaceship.move(getOrientationControls()); // get the orientation controls - if any
 			}
 		}
 				
