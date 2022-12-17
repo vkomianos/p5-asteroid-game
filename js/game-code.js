@@ -148,10 +148,10 @@
 				if (this.exploded)
 					return false;
 				
-				image(this.image, this.x, this.y-=10); // each time an asteroid is displayed its position is updated (asteroids fall [y is increased])
-				if (this.y < 0) // asteroid is dissappeared and load() is called to load again the asteroid 
+				image(this.image, this.x, this.y-=10); // missiles move forward (y is decreased)
+				if (this.y < 0) // missile is dissappeared 
 				{
-					return false; // game object will be destroyed
+					return false; 
 				}
 				return true;
 			}
