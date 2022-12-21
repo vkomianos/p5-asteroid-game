@@ -73,7 +73,7 @@
 		class MissilePack
 		{
 			//missilePacks = [];
-			
+			loadSound = "";
 			
 			constructor()
 			{
@@ -243,14 +243,22 @@
 		{
 			x = 640; // X position
 			y = 420; // Y position
+			engineSound = "";
 			
 			missiles = 0;
 			
 			constructor()
 			{
 				this.image = loadImage("game-assets/spaceship-2.png");
-				this.engineSound = createAudio("game-assets/engine.wav");
+				//this.engineSound = createAudio("game-assets/engine.wav");
+				
+				this.engineSound
+				$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
+				  this.engineSound = Pd.loadPatch(patchStr);
+				  //Pd.start();
+				})
 			}
+			
 			
 			display()
 			{
@@ -272,13 +280,15 @@
 			
 			startEngineSound()
 			{
-				this.engineSound.play();
-				this.engineSound.loop();
+				//this.engineSound.play();
+				//this.engineSound.loop();
+				Pd.start();
 			}
 			
 			stopEngineSound()
 			{
-				this.engineSound.stop();
+				//this.engineSound.stop();
+				Pd.stop();
 			}
 			
 			addMissiles(howMany)

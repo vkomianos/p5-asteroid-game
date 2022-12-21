@@ -1,0 +1,70 @@
+#N canvas 49 45 993 694 10;
+#X obj 129 584 dac~;
+#X obj 141 533 *~;
+#X obj 91 346 vsl 15 128 0 1 0 0 empty empty empty 0 -9 0 10 -262144
+-1 -1 6350 1;
+#X obj 91 493 pack 0 50;
+#X obj 91 531 line~;
+#X obj 295 474 *~;
+#X obj 528 340 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 488 277 metro 2000;
+#X obj 488 229 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X text 31 17 last updated: 05/11/22;
+#X text 31 57 Hello Vasili;
+#X text 31 77 kanonika twra prepei na akous ena periodiko mplimpliki
+;
+#X text 31 97 kapoia info:;
+#X msg 105 268 \; pd dsp \$1 \;;
+#X msg 29 191 1;
+#X obj 29 170 loadbang;
+#X text 29 121 1_ i entoli "loadbang" stelnei mia energeia me to pou
+fortwneis to patch.;
+#X text 91 191 2_ edw energopoiei to mynima "1" to opoio.;
+#X text 98 247 << 2a_ gemizei ti metavliti pou energopoiei genika to
+audio;
+#X msg 117 343 0.5;
+#X obj 295 435 osc~ 220;
+#X text 85 321 << 3_ episis stelnei to mynima "0.5" stin entasi toou
+hxou;
+#X text 183 584 SHMANTIKO GIA THN KATANOHSH:;
+#X text 307 603 h seira 2a >> 2b >> 3 exartatai apo ti seira poy dhmiourgisa
+ta antikeimena kai tis metaxy touw syndeseis. San \, otan kanw kati
+sto optiko perivallon \, ayto na grafetai se enan aorato ston xristi
+kwdika;
+#X text 508 227 << 2b_ energopoiei ton diakopti enos metronomou pou
+varaei kathe 2 secs. an thes mporeis manually na ton anoigokleineis
+na mi soun zalizei ta paparia.;
+#X floatatom 295 405 5 0 0 0 - - -;
+#X text 321 471 ayti i gennitria orizei to eidos kai ti syxnothta tis
+kymatomorfis \, se ayti tin periptwsi hmitonoeidis sta 220 Hz. me to
+number box mporeis na allazeis ta Hz;
+#X obj 465 414 line~;
+#X msg 528 387 1 50;
+#X text 562 320 ayti i domi orizei to envelope (morfopoihth) tis entasis
+tou hxou. apo to 0 sto 1 se 50 mlsecs \, epeita to delay energopoiei
+to deytero ramp meta apo 300 mlsecs pisw sto 0 se 1000 mlsecs;
+#X msg 574 409 0 1000;
+#X obj 646 416 delay 300;
+#X connect 1 0 0 0;
+#X connect 1 0 0 1;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 1 1;
+#X connect 5 0 1 0;
+#X connect 6 0 28 0;
+#X connect 6 0 31 0;
+#X connect 7 0 6 0;
+#X connect 8 0 7 0;
+#X connect 14 0 13 0;
+#X connect 14 0 8 0;
+#X connect 14 0 19 0;
+#X connect 15 0 14 0;
+#X connect 19 0 2 0;
+#X connect 20 0 5 0;
+#X connect 25 0 20 0;
+#X connect 27 0 5 1;
+#X connect 28 0 27 0;
+#X connect 30 0 27 0;
+#X connect 31 0 30 0;
