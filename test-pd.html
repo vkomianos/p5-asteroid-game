@@ -1,0 +1,32 @@
+<!doctype HTML>
+<html>
+  <head>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/webpd.min.js"></script>
+    <script>
+	
+	
+	function play()
+	{
+		
+        var patch
+        $.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
+          patch = Pd.loadPatch(patchStr);
+          Pd.start();
+        })
+		
+		
+		/*
+		Pd.loadPatch("empire-begins.pd");
+		Pd.start();
+		*/
+		
+	}
+	
+    </script>
+  </head>
+ 
+  <body onkeydown="play();">
+  Press a key
+  </body>
+</html>

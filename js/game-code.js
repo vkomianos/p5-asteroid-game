@@ -51,7 +51,9 @@
 				{
 					this.exploded = true;
 					this.image = this.explosionImage; // change the asteroid image with explosion
-					this.explosionSound.play(); // explosion sound
+					
+					//this.explosionSound.play(); // explosion sound
+					this.explosionSoundPD();
 					
 					return true; // if explode returns true player loses a life
 				}
@@ -63,10 +65,21 @@
 				{
 					this.exploded = true;
 					this.image = this.explosionImage; // change the asteroid image with explosion
-					this.explosionSound.play(); // explosion sound
+					//this.explosionSound.play(); // explosion sound
+					this.explosionSoundPD();
 					
 					return true; 
 				}
+			}
+			
+			explosionSoundPD()
+			{
+				Pd.stop();
+				Pd.start();
+				//Pd.send('collect', 1);
+				Pd.send('collision', 1);
+				Pd.start();
+					
 			}
 		}
 		
@@ -80,7 +93,7 @@
 				this.x = 0;
 				this.y = 0;
 				this.image = loadImage("game-assets/missile-pack-2.png");
-				this.loadSound = createAudio("game-assets/load-missiles.wav");
+				//this.loadSound = createAudio("game-assets/load-missiles.wav");
 			}
 			
 			newMissilePack(score)
@@ -118,7 +131,14 @@
 					spaceship.addMissiles(3);
 					this.y = 0; // missilepack is taken - new missilePack may be created
 					//console.log('Missile pack is collected!');
-					this.loadSound.play();
+					//this.loadSound.play();
+					
+					Pd.stop();
+					Pd.start();
+					Pd.send('collect', 1);
+					//Pd.send('collision', 1);
+					Pd.start();
+					
 				}
 
 				
@@ -252,11 +272,7 @@
 				this.image = loadImage("game-assets/spaceship-2.png");
 				//this.engineSound = createAudio("game-assets/engine.wav");
 				
-				this.engineSound
-				$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
-				  this.engineSound = Pd.loadPatch(patchStr);
-				  //Pd.start();
-				})
+				
 			}
 			
 			
@@ -280,15 +296,21 @@
 			
 			startEngineSound()
 			{
+				console.log("Start sound.");
 				//this.engineSound.play();
 				//this.engineSound.loop();
-				Pd.start();
+				//Pd.start();
+				
+				//Pd.send('countdown', 1);
+				//Pd.send('collision', 1);
+				//Pd.send('collect', 1);
+				//Pd.start();
 			}
 			
 			stopEngineSound()
 			{
 				//this.engineSound.stop();
-				Pd.stop();
+				//Pd.stop();
 			}
 			
 			addMissiles(howMany)
@@ -366,6 +388,8 @@
 		let missiles = [];
 		let missilePack;
 		
+		let gameSounds;
+		
 		/*
 			P5 functions preload(), setup(), draw() and keyPressed() are used
 		*/
@@ -377,6 +401,13 @@
 			
 			missileImage = loadImage("game-assets/missile-2.png");
 			missilePack = new MissilePack();
+			
+			gameSounds
+				//$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
+				$.get('game-assets/pure-data-patches/Empire-Begins_CompleteSoundPack.pd', function(patchStr) {
+				  gameSounds = Pd.loadPatch(patchStr);
+				  Pd.start();
+				})
 		}
 		
 		function setup() 
