@@ -51,10 +51,134 @@
 				{
 					this.exploded = true;
 					this.image = this.explosionImage; // change the asteroid image with explosion
-					this.explosionSound.play(); // explosion sound
+					
+					//this.explosionSound.play(); // explosion sound
+					this.explosionSoundPD();
 					
 					return true; // if explode returns true player loses a life
 				}
+			}
+			
+			detonate()
+			{
+				if (!this.exploded) // each asteroid can explode/detonate only once
+				{
+					this.exploded = true;
+					this.image = this.explosionImage; // change the asteroid image with explosion
+					//this.explosionSound.play(); // explosion sound
+					this.explosionSoundPD();
+					
+					return true; 
+				}
+			}
+			
+			explosionSoundPD()
+			{
+				Pd.stop();
+				Pd.start();
+				//Pd.send('collect', 1);
+				Pd.send('collision', 1);
+				Pd.start();
+					
+			}
+		}
+		
+		class MissilePack
+		{
+			//missilePacks = [];
+			loadSound = "";
+			
+			constructor()
+			{
+				this.x = 0;
+				this.y = 0;
+				this.image = loadImage("game-assets/missile-pack-2.png");
+				//this.loadSound = createAudio("game-assets/load-missiles.wav");
+			}
+			
+			newMissilePack(score)
+			{
+				if (score > 0 && this.y == 0) // y == 0 means that there is no other pack in the screen
+				{
+					let xR = Math.floor(Math.random() * 100);
+					if ( xR == 1 )
+					{
+						console.log('Create a missile pack');
+						this.x = Math.floor(Math.random() * 1270); // random X position
+						this.y = 0;
+						image(this.image, this.x, this.y++);
+					}
+				}
+			}
+			
+			display()
+			{
+				if (this.y > 0) // when a missilePack is created this.y is increased - so if a missilePack exists then it will be displayed
+				{
+					image(this.image, this.x, this.y+= 5);
+					if (this.y > 591) // pack is lost
+					{
+						this.y = 0;
+					}
+				}
+			}
+			
+			checkForCollection(spaceship) // if a missilepack collides with the spaceship is collected
+			{
+				// taken by asteroid.checkForCollision() -- not very precise yet 
+				if (Math.abs(this.x - spaceship.x) < 50 && this.y >= 420 && this.y <= 590)
+				{
+					spaceship.addMissiles(3);
+					this.y = 0; // missilepack is taken - new missilePack may be created
+					//console.log('Missile pack is collected!');
+					//this.loadSound.play();
+					
+					Pd.stop();
+					Pd.start();
+					Pd.send('collect', 1);
+					//Pd.send('collision', 1);
+					Pd.start();
+					
+				}
+
+				
+				
+			}
+		}
+		
+		class Missile
+		{
+			x = 0;
+			y = 0;
+			exploded = false;
+			
+			constructor()
+			{
+				this.y = 300;
+				this.image = missileImage;
+			}
+			
+			fire(spaceship)
+			{
+				this.x = spaceship.x+25;
+			}
+			
+			display() 
+			{
+				if (this.exploded)
+					return false;
+				
+				image(this.image, this.x, this.y-=10); // missiles move forward (y is decreased)
+				if (this.y < 0) // missile is dissappeared 
+				{
+					return false; 
+				}
+				return true;
+			}
+			
+			explode()
+			{
+				this.exploded = true;
 			}
 		}
 		
@@ -116,6 +240,22 @@
 						return this.asteroids[i].explode();
 					}
 				}
+			}
+
+			checkForDetonation(missiles)
+			{
+				// not very precise yet 
+				for (let i = 0; i < this.asteroids.length; i++)
+				{
+					for (let z = 0; z < missiles.length; z++)
+					{
+						if (Math.abs(this.asteroids[i].x - missiles[z].x) < 40  && Math.abs(this.asteroids[i].y - missiles[z].y) < 20 )
+						{
+							missiles[z].explode();
+							return this.asteroids[i].detonate();
+						}
+					}
+				}
 			}	
 		}
 		
@@ -123,12 +263,18 @@
 		{
 			x = 640; // X position
 			y = 420; // Y position
-				
+			engineSound = "";
+			
+			missiles = 0;
+			
 			constructor()
 			{
 				this.image = loadImage("game-assets/spaceship-2.png");
-				this.engineSound = createAudio("game-assets/engine.wav");
+				//this.engineSound = createAudio("game-assets/engine.wav");
+				
+				
 			}
+			
 			
 			display()
 			{
@@ -150,13 +296,36 @@
 			
 			startEngineSound()
 			{
-				this.engineSound.play();
-				this.engineSound.loop();
+				console.log("Start sound.");
+				//this.engineSound.play();
+				//this.engineSound.loop();
+				
+				Pd.stop();
+				Pd.start();
+				Pd.send('countdown', 1);
+				Pd.start();
 			}
 			
 			stopEngineSound()
 			{
-				this.engineSound.stop();
+				//this.engineSound.stop();
+				//Pd.stop();
+			}
+			
+			addMissiles(howMany)
+			{
+				this.missiles+= howMany;
+			}
+			
+			fireMissile()
+			{
+				if (this.missiles > 0)
+				{
+					let missile = new Missile();
+					missile.fire(this);
+					this.missiles--;
+					return missile;
+				}
 			}
 		}
 		
@@ -214,6 +383,12 @@
 		let gameOver = false;
 		let paused = false;
 		
+		let missileImage;
+		let missiles = [];
+		let missilePack;
+		
+		let gameSounds;
+		
 		/*
 			P5 functions preload(), setup(), draw() and keyPressed() are used
 		*/
@@ -222,6 +397,16 @@
 			background = loadImage("game-assets/moon-bg.jpg");		// load the background-image
 			asteroidImage = loadImage("game-assets/asteroid-2.png"); // load once and the pass to Asteroid so that will not load each time an Asteroid is created
 			spaceship = new SpaceShip();
+			
+			missileImage = loadImage("game-assets/missile-2.png");
+			missilePack = new MissilePack();
+			
+			gameSounds
+				//$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
+				$.get('game-assets/pure-data-patches/Empire-Begins_CompleteSoundPack.pd', function(patchStr) {
+				  gameSounds = Pd.loadPatch(patchStr);
+				  Pd.start();
+				})
 		}
 		
 		function setup() 
@@ -259,15 +444,21 @@
 			if (gameOver) // game over
 			{
 				spaceship.stopEngineSound();
+				spaceship.missiles = 0;
 			}
 			
 			if (!gameOver && startGame && !paused) // while the game is played
 			{
 				asteroidSwarm.handleAsteroids(); // handle the asteroids
 				
-				if (asteroidSwarm.checkForCollision(spaceship)) // chech for collisions - if any then reduceOneLive
+				if (asteroidSwarm.checkForCollision(spaceship)) // check for collisions - if any then reduceOneLive
 				{	
 					spaceShipLives.reduceOneLive();
+				}
+				
+				if (asteroidSwarm.checkForDetonation(missiles)) // check for collisions - if any then reduceOneLive
+				{	
+					//spaceShipLives.reduceOneLive();
 				}
 				
 				if (spaceShipLives.livesLeft == 0) // defines the player loses 
@@ -283,13 +474,45 @@
 					spaceship.move(1);
 				}
 				
+        //touch-and-orientation-controls
 				spaceship.move(getTouchDirectionControl()); // get the touch controls - if any
 				spaceship.move(getOrientationControls()); // get the orientation controls - if any
+
+				/*
+				if (keyIsDown(32)) // space is pressed
+				{
+					missiles.push(spaceship.fireMissile());
+				}
+				*/
+				
+				missilePack.newMissilePack(asteroidSwarm.asteroidsPassed);
+				missilePack.display();
+				missilePack.checkForCollection(spaceship);
+				
+				for (let i = 0; i < missiles.length; i++)
+				{
+					//onsole.log('Check missile['+i+']');
+					if(!missiles[i].display())
+					{
+						//console.log('Missile ' + i + ' out of screen');
+						missiles.splice(i,1);
+						i--;
+					}
+				}
+				
+
 			}
 		}
 				
 		function keyPressed()
 		{
+			if (keyIsDown(32)) // space is pressed - fire a missile
+			{
+				let temp = spaceship.fireMissile();
+				if (temp != undefined)
+					missiles.push(temp);
+			}
+			
 			if (keyCode == 78) // n is pressed - New game
 			{
 				startGame = true;
@@ -314,14 +537,16 @@
 
 		function showMessages()
 		{
-			textSize(20);
-			text("Score: " + asteroidSwarm.asteroidsPassed, 30, 120); // Score is shown
+			textSize(30);
+			text("Score: " + asteroidSwarm.asteroidsPassed, 30, 135); // Score is shown
+			
+			text("Missiles: " + spaceship.missiles, 1120, 60); // Score is shown
 		
 			if (!startGame)
-				rect(280, 280, 680, 120); // rectangle (window) to show the message to start game
+				rect(280, 280, 680, 140); // rectangle (window) to show the message to start game
 				
 			if (gameOver)
-				rect(280, 220, 680, 180); // rectangle (window) to show the message game over and start game
+				rect(280, 220, 680, 200); // rectangle (window) to show the message game over and start game
 		
 			textSize(50);
 			if (!startGame || gameOver) // provide instructions
@@ -329,6 +554,7 @@
 				text('Press N to start a new game.', 300, 300, 800, 200);
 				textSize(25);
 				text('Use the left and right arrows to avoid the asteroids.', 340, 360, 800, 200);
+				text('Get the missiles and fire by pressing the Space bar!', 340, 390, 800, 200);
 			}
 			
 			if (gameOver)
