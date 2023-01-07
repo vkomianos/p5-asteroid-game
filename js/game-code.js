@@ -299,12 +299,11 @@
 				console.log("Start sound.");
 				//this.engineSound.play();
 				//this.engineSound.loop();
-				//Pd.start();
 				
-				//Pd.send('countdown', 1);
-				//Pd.send('collision', 1);
-				//Pd.send('collect', 1);
-				//Pd.start();
+				Pd.stop();
+				Pd.start();
+				Pd.send('countdown', 1);
+				Pd.start();
 			}
 			
 			stopEngineSound()
