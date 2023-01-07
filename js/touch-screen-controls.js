@@ -11,6 +11,7 @@ document.addEventListener('contextmenu', event => event.preventDefault()); // di
 
 function setupTouchScreenControls()
 {
+	console.log("Execution of: setupTouchScreenControls()");
 	controllerPad = createImg("./game-assets/game-controller-2.png");
 	controllerLeft = createImg("./game-assets/arrow-left.png");
 	controllerRight = createImg("./game-assets/arrow-right.png");

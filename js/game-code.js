@@ -302,7 +302,7 @@
 				
 				Pd.stop();
 				Pd.start();
-				Pd.send('countdown', 1);
+				//Pd.send('countdown', 1);
 				Pd.start();
 			}
 			
