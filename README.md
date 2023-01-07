@@ -1,2 +1,1 @@
-# WebPd (Pure Data patches)
-Check class Spaceship - engineSound uses a pure data patch.
+Branched the pure-data-patches-extended branch and merge with touch-and-orientation-controls
