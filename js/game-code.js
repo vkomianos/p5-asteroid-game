@@ -309,7 +309,7 @@
 			stopEngineSound()
 			{
 				//this.engineSound.stop();
-				//Pd.stop();
+				Pd.stop();
 			}
 			
 			addMissiles(howMany)
@@ -474,7 +474,7 @@
 					spaceship.move(1);
 				}
 				
-        //touch-and-orientation-controls
+				//touch-and-orientation-controls
 				spaceship.move(getTouchDirectionControl()); // get the touch controls - if any
 				spaceship.move(getOrientationControls()); // get the orientation controls - if any
 
