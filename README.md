@@ -1,6 +1,6 @@
-Branched the pure-data-patches-extended branch and merge with touch-and-orientation-controls 
+Branched from the pure-data-patches-extended branch and merged with touch-and-orientation-controls 
 
-The game can be played in PC or mobile phone/tablet.
+The game can be played in PC or mobile phone/tablet and used Pure data patch.
 
 PC controls:
 - N for new game
