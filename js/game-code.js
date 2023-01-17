@@ -74,12 +74,7 @@
 			
 			explosionSoundPD()
 			{
-				Pd.stop();
-				Pd.start();
-				//Pd.send('collect', 1);
-				Pd.send('collision', 1);
-				Pd.start();
-					
+				Pd.send('collision', []);
 			}
 		}
 		
@@ -132,12 +127,8 @@
 					this.y = 0; // missilepack is taken - new missilePack may be created
 					//console.log('Missile pack is collected!');
 					//this.loadSound.play();
-					
-					Pd.stop();
-					Pd.start();
-					Pd.send('collect', 1);
-					//Pd.send('collision', 1);
-					Pd.start();
+										
+					Pd.send('collect', []);
 					
 				}
 
@@ -263,7 +254,7 @@
 		{
 			x = 640; // X position
 			y = 420; // Y position
-			engineSound = "";
+			//engineSound = "";
 			
 			missiles = 0;
 			
@@ -299,17 +290,15 @@
 				console.log("Start sound.");
 				//this.engineSound.play();
 				//this.engineSound.loop();
-				
-				Pd.stop();
-				Pd.start();
-				//Pd.send('countdown', 1);
-				Pd.start();
+								
+				Pd.send('blip',1);
 			}
 			
 			stopEngineSound()
 			{
 				//this.engineSound.stop();
-				Pd.stop();
+				//Pd.stop();
+				Pd.send('blip',0);
 			}
 			
 			addMissiles(howMany)
@@ -403,9 +392,8 @@
 			
 			gameSounds
 				//$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
-				$.get('game-assets/pure-data-patches/Empire-Begins_CompleteSoundPack.pd', function(patchStr) {
+				$.get('game-assets/pure-data-patches/game-patch.pd', function(patchStr) {
 				  gameSounds = Pd.loadPatch(patchStr);
-				  Pd.start();
 				})
 		}
 		
@@ -434,6 +422,7 @@
 			
 			if (startGame && !gameOver && startOnce) // begin a new game
 			{
+				Pd.start();
 				asteroidSwarm.reset();
 				asteroidSwarm.addNewAsteroids(2);
 				spaceship.startEngineSound();
@@ -444,6 +433,7 @@
 			if (gameOver) // game over
 			{
 				spaceship.stopEngineSound();
+				Pd.stop(); // put in comments if you enable audio with confirm on page load
 				spaceship.missiles = 0;
 			}
 			
@@ -477,6 +467,9 @@
 				//touch-and-orientation-controls
 				spaceship.move(getTouchDirectionControl()); // get the touch controls - if any
 				spaceship.move(getOrientationControls()); // get the orientation controls - if any
+
+				//Pd.send('receive', [spaceship.x]);  // to try this or the following
+				//Pd.send('receive', [parseFloat($('#spaceship.x').val())]);
 
 				/*
 				if (keyIsDown(32)) // space is pressed

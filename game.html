@@ -15,8 +15,33 @@
 </head>
 
 
-<body style="background-image: url('game-assets/spaceship-interior-6.jpg');">
+<body style="background-image: url('game-assets/spaceship-interior-6.jpg');" onkeydown="//turnAudioOn();">
 </body>
 
+<script>
+
+	let centralAudioOn = false;
+	
+	function turnAudioOn()
+	{
+		/*
+			used when constant blip sound was not playing - it needed two user actions
+		*/
+	
+		Pd.start();
+		
+		if (!centralAudioOn)
+		{
+			if (confirm("Turn audio on?") == true)
+			{
+				console.log("Audio on");
+				centralAudioOn = true;
+			}
+			else
+			{
+			}
+		}
+	}
+</script>
 
 </html>
