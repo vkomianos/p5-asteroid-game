@@ -289,16 +289,14 @@
 			{
 				console.log("Start sound.");
 				//this.engineSound.play();
-				//this.engineSound.loop();
-								
+				//this.engineSound.loop();			
 				Pd.send('blip',1);
 			}
 			
 			stopEngineSound()
 			{
 				//this.engineSound.stop();
-				//Pd.stop();
-				Pd.send('blip',0);
+				//Pd.send('blip',[0]);
 			}
 			
 			addMissiles(howMany)
@@ -437,6 +435,7 @@
 				spaceship.missiles = 0;
 			}
 			
+			
 			if (!gameOver && startGame && !paused) // while the game is played
 			{
 				asteroidSwarm.handleAsteroids(); // handle the asteroids
@@ -521,10 +520,15 @@
 					paused = false;
 					
 				if (paused)
-					spaceship.stopEngineSound();
-					
+				{
+					//spaceship.stopEngineSound();
+					Pd.stop();
+				}
 				if (!paused)
+				{
+					Pd.start();
 					spaceship.startEngineSound();
+				}
 			}
 		}
 
