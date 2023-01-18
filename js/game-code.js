@@ -16,7 +16,6 @@
 				this.maxSpeed = 12;
 				
 				this.image = asteroidImage;
-				this.explosionSound = createAudio("game-assets/explosion-05.wav");
 				this.explosionImage = loadImage("game-assets/explosion-2.png");
 				this.load();
 			}
@@ -51,8 +50,6 @@
 				{
 					this.exploded = true;
 					this.image = this.explosionImage; // change the asteroid image with explosion
-					
-					//this.explosionSound.play(); // explosion sound
 					this.explosionSoundPD();
 					
 					return true; // if explode returns true player loses a life
@@ -65,7 +62,6 @@
 				{
 					this.exploded = true;
 					this.image = this.explosionImage; // change the asteroid image with explosion
-					//this.explosionSound.play(); // explosion sound
 					this.explosionSoundPD();
 					
 					return true; 
@@ -88,7 +84,6 @@
 				this.x = 0;
 				this.y = 0;
 				this.image = loadImage("game-assets/missile-pack-2.png");
-				//this.loadSound = createAudio("game-assets/load-missiles.wav");
 			}
 			
 			newMissilePack(score)
@@ -126,14 +121,9 @@
 					spaceship.addMissiles(3);
 					this.y = 0; // missilepack is taken - new missilePack may be created
 					//console.log('Missile pack is collected!');
-					//this.loadSound.play();
 										
 					Pd.send('collect', []);
-					
-				}
-
-				
-				
+				}	
 			}
 		}
 		
@@ -210,7 +200,6 @@
 						this.asteroidsPassed++; // and the asteroid's passage is completed
 					}
 				}
-				
 				this.handleDifficulty();
 			}
 			
@@ -254,18 +243,13 @@
 		{
 			x = 640; // X position
 			y = 420; // Y position
-			//engineSound = "";
 			
 			missiles = 0;
 			
 			constructor()
 			{
 				this.image = loadImage("game-assets/spaceship-2.png");
-				//this.engineSound = createAudio("game-assets/engine.wav");
-				
-				
 			}
-			
 			
 			display()
 			{
@@ -288,16 +272,11 @@
 			startEngineSound()
 			{
 				console.log("Start sound.");
-				//this.engineSound.play();
-				//this.engineSound.loop();			
-				//Pd.send('blip',1);
 				Pd.send('blip',[]);
 			}
 			
 			stopEngineSound()
 			{
-				//this.engineSound.stop();
-				//Pd.send('blip',[0]);
 			}
 			
 			addMissiles(howMany)
@@ -375,7 +354,7 @@
 		let missiles = [];
 		let missilePack;
 		
-		let gameSounds;
+		let gameSounds; // will load the pure data patch
 		
 		/*
 			P5 functions preload(), setup(), draw() and keyPressed() are used
@@ -389,9 +368,8 @@
 			missileImage = loadImage("game-assets/missile-2.png");
 			missilePack = new MissilePack();
 			
-			gameSounds
-				//$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
-				$.get('game-assets/pure-data-patches/game-patch-2.pd', function(patchStr) {
+			gameSounds 
+			$.get('game-assets/pure-data-patches/game-patch-2.pd', function(patchStr) {
 				  gameSounds = Pd.loadPatch(patchStr);
 				})
 		}
@@ -468,23 +446,15 @@
 				spaceship.move(getTouchDirectionControl()); // get the touch controls - if any
 				spaceship.move(getOrientationControls()); // get the orientation controls - if any
 
-				//Pd.send('receive', [spaceship.x]);  // to try this or the following
+				//Pd.send('receive', [spaceship.x]);  // to try this or the following -- for future development
 				//Pd.send('receive', [parseFloat($('#spaceship.x').val())]);
 
-				/*
-				if (keyIsDown(32)) // space is pressed
-				{
-					missiles.push(spaceship.fireMissile());
-				}
-				*/
-				
 				missilePack.newMissilePack(asteroidSwarm.asteroidsPassed);
 				missilePack.display();
 				missilePack.checkForCollection(spaceship);
 				
 				for (let i = 0; i < missiles.length; i++)
 				{
-					//onsole.log('Check missile['+i+']');
 					if(!missiles[i].display())
 					{
 						//console.log('Missile ' + i + ' out of screen');
@@ -492,8 +462,6 @@
 						i--;
 					}
 				}
-				
-
 			}
 		}
 				
@@ -522,7 +490,6 @@
 					
 				if (paused)
 				{
-					//spaceship.stopEngineSound();
 					Pd.stop();
 				}
 				if (!paused)
