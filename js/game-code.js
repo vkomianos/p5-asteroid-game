@@ -290,7 +290,8 @@
 				console.log("Start sound.");
 				//this.engineSound.play();
 				//this.engineSound.loop();			
-				Pd.send('blip',1);
+				//Pd.send('blip',1);
+				Pd.send('blip',[]);
 			}
 			
 			stopEngineSound()
