@@ -1,0 +1,85 @@
+<!doctype HTML>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>P5 + Pd</title>
+
+    <script src="../js/p5.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/webpd.min.js"></script>    
+  </head> 
+  
+  <body>
+        First press S to activate sound.. <br/>
+        Then press Q or W or E to listen! <br/>
+	<p id="messages">
+	</p>
+  </body>
+  
+	<script>
+	
+	counter = 0;
+  
+	function setup() 
+	{
+		 var patch
+        $.get('../game-assets/pure-data-patches/game-patch-2.pd', function(patchStr) {
+            patch = Pd.loadPatch(patchStr);
+        })
+	    //Pd.start();
+	}
+	
+        /*
+	function start() 
+	{
+	    Pd.start();
+		
+	}
+	*/
+	function keyPressed()
+	{
+		console.log(keyCode); // Print on console the keyCode - once you find the keyCode you will know the keyIsDown(x)
+		
+                if(keyIsDown(83))
+		{
+			//Pd.stop();  
+		        Pd.start();
+		}
+	    
+	        if(keyIsDown(81))
+	        {
+	                Pd.send('collision',[]);	
+		        //Pd.send('collision',[parseFloat($('1').val())]);
+			document.getElementById('messages').innerHTML += ++counter + ". Pressed Q<br/>";
+		}
+			
+		if (keyIsDown(87))
+		{
+			Pd.send('collect',[]);
+			document.getElementById('messages').innerHTML +=  ++counter + ". Pressed W<br/>";
+		}
+
+	        if (keyIsDown(69))
+		{
+			Pd.send('blip',[]);
+			document.getElementById('messages').innerHTML +=  ++counter + ". Pressed E<br/>";
+		}
+
+                /*
+	        if (keyIsDown(69))
+		{
+			//Pd.stop();
+			//Pd.start();
+			//Pd.send('blip', 1);
+			//Pd.start();
+			document.getElementById('messages').innerHTML +=  ++counter + ". Pressed E<br/>";
+			}
+			*/
+	}
+		
+	
+  
+  </script>
+  
+</html>
+

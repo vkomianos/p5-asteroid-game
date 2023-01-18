@@ -392,7 +392,7 @@
 			
 			gameSounds
 				//$.get('game-assets/pure-data-patches/empire-begins-2.pd', function(patchStr) {
-				$.get('game-assets/pure-data-patches/game-patch.pd', function(patchStr) {
+				$.get('game-assets/pure-data-patches/game-patch-2.pd', function(patchStr) {
 				  gameSounds = Pd.loadPatch(patchStr);
 				})
 		}
