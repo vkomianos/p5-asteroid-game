@@ -1,5 +1,7 @@
 Branched from the pure-data-patches-extended branch and merged with touch-and-orientation-controls 
 
+Using https://github.com/sebpiq/WebPd for the PD patches.
+
 The game can be played in PC or mobile phone/tablet and used Pure data patch.
 
 PC controls:
