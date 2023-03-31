@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Asteroids Game</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game-canvas" width="800" height="600"></canvas>
+    <script>
+	
+	
+	const keys = {};
+
+window.addEventListener('keydown', (event) => {
+  keys[event.code] = true;
+});
+
+window.addEventListener('keyup', (event) => {
+  keys[event.code] = false;
+});
+	
+		class Spaceship {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = 20;
+    this.angle = 90;
+    this.image = new Image();
+    this.image.src = "https://i.imgur.com/moA98cY.png";
+  }
+
+  update() {
+    // Check for user input
+    if (keys.ArrowLeft) {
+      this.x -= 5;
+    }
+    if (keys.ArrowRight) {
+      this.x += 5;
+    }
+
+    // Constrain spaceship to horizontal axis
+    if (this.x < 0) {
+      this.x = 0;
+    }
+    if (this.x > canvas.width) {
+      this.x = canvas.width;
+    }
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate((this.angle / 180) * Math.PI);
+    ctx.drawImage(this.image, -25, -25, 50, 50);
+    ctx.restore();
+  }
+}
+
+     // Asteroid class definition
+      class Asteroid {
+        constructor(x, y, radius, velocity, image) {
+          this.x = x;
+          this.y = y;
+          this.radius = radius;
+          this.velocity = velocity;
+          this.image = image;
+        }
+
+        draw(ctx) {
+          ctx.drawImage(this.image, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+        }
+
+        update() {
+          this.x += this.velocity.x;
+          this.y += this.velocity.y;
+          // Code to check for collisions with the spaceship or bullets
+        }
+      }
+
+      // Game setup
+      const canvas = document.getElementById('game-canvas');
+      const ctx = canvas.getContext('2d');
+      const asteroidImage = new Image();
+      asteroidImage.src = 'https://raw.githubusercontent.com/vkomianos/p5-asteroids-game/main/game-assets/asteroid-2.png';
+      const asteroid = new Asteroid(100, 100, 30, { x: 1, y: 1 }, asteroidImage);
+      const asteroids = [asteroid];
+
+	const spaceshipImage = new Image();
+spaceshipImage.src = 'https://raw.githubusercontent.com/vkomianos/p5-asteroids-game/main/game-assets/spaceship-2.png';
+const spaceship = new Spaceship(canvas.width / 2, canvas.height / 2, 30, spaceshipImage);
+
+
+      // Game loop
+      function gameLoop() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update and draw each asteroid
+        asteroids.forEach(asteroid => {
+          asteroid.update();
+          asteroid.draw(ctx);
+        });
+
+	spaceship.update();
+  spaceship.draw(ctx);
+
+        // Request the next frame of the game loop
+        requestAnimationFrame(gameLoop);
+      }
+
+      // Start the game loop
+      requestAnimationFrame(gameLoop);
+    </script>
+  </body>
+</html>

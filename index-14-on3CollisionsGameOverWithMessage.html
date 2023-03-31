@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Asteroids Game</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game-canvas" width="800" height="600"></canvas>
+    <script>
+	
+	
+	const keys = {};
+
+window.addEventListener('keydown', (event) => {
+  keys[event.code] = true;
+});
+
+window.addEventListener('keyup', (event) => {
+  keys[event.code] = false;
+});
+	
+		class Spaceship {
+  constructor(x, y) {
+    this.x = x;
+    //this.y = y;
+    this.y = 500; // added by me [vkom]
+	this.radius = 20;
+    //this.angle = 90; // i don't need it rotated [vkom]
+    this.image = new Image();
+    this.image.src = "https://raw.githubusercontent.com/vkomianos/p5-asteroids-game/main/game-assets/spaceship-2.png";
+  }
+
+  update() {
+    // Check for user input
+    if (keys.ArrowLeft) {
+      this.x -= 5;
+    }
+    if (keys.ArrowRight) {
+      this.x += 5;
+    }
+
+    // Constrain spaceship to horizontal axis
+    if (this.x < 0) {
+      this.x = 0;
+    }
+    if (this.x > canvas.width) {
+      this.x = canvas.width;
+    }
+  }
+
+  draw() {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate((this.angle / 180) * Math.PI);
+    ctx.drawImage(this.image, -25, -25, 50, 50);
+    ctx.restore();
+  }
+}
+
+     // Asteroid class definition
+    class Asteroid {
+	
+	collided = false; // added by vkom to bypass crashing when asteroid hits  spaceship (pithanotata afairei oles tis zoes kai den exei oristei symperifora gia to game over) 
+	
+  constructor( x, y, radius, color, speed) {
+    this.x = Math.floor(Math.random()) * 500; // corrections by vkom
+    this.y = 0; // corrections by vkom
+    this.radius = 20; // corrections by vkom
+    this.color = color;
+    this.speed = 2; // corrections by vkom
+  }
+  
+  draw() {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.restore();
+  }
+  
+  update() {
+    this.y += this.speed;
+  }
+}
+
+
+
+class Game {
+  constructor() {
+    this.spaceship = new Spaceship(canvas.width / 2, canvas.height / 2);
+    this.asteroids = [];
+    for (let i = 0; i < 3; i++) {
+      this.asteroids.push(new Asteroid());
+    }
+    this.score = 0; // Added score even though i did not ask for it - but not working of course
+	
+	// Background image added by me [vkom]
+	this.bgImage = new Image;
+	this.bgImage.src = 'https://raw.githubusercontent.com/vkomianos/p5-asteroids-game/main/game-assets/moon-bg.jpg';
+  }
+
+  update() {
+    this.spaceship.update();
+    this.asteroids.forEach((asteroid) => {
+      asteroid.update();
+
+      // Check for collision with spaceship
+      const distance = Math.sqrt((this.spaceship.x - asteroid.x) ** 2 + (this.spaceship.y - asteroid.y) ** 2);
+      //if (distance < this.spaceship.radius + asteroid.radius) // replaced to avoid game-crash-freeze
+	  if (distance < this.spaceship.radius + asteroid.radius && !asteroid.collided)
+	  {
+        console.log("Collision detected!");
+		
+		console.log("Lives: " + lives);//by vkom
+		
+		// Added selectively by vkom ->
+		lives--;
+		if (lives === 0) 
+		{
+			gameOver = true;
+		} // <- vkom
+		
+		
+		//modification & addition by me
+		asteroid.collided = true;
+      }
+    });
+  }
+
+  draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(this.bgImage, 0, 0); // added by me [vkom]
+	
+	drawScore();
+	
+    this.spaceship.draw();
+    this.asteroids.forEach(asteroid => {
+    asteroid.draw();
+    asteroid.update();
+    
+    if (asteroid.y - asteroid.radius > canvas.height) {
+      asteroid.y = -asteroid.radius;
+      asteroid.x = Math.random() * (canvas.width - asteroid.radius * 2) + asteroid.radius;
+    }
+	
+	//if(asteroidPositions[i].y > canvas.height) { // selectively copied from chatGPT to increase score [vkom]
+      if(asteroid.y > canvas.height) { // i had to correct it also [vkom]
+	  score++;
+    }
+	
+	if (lives == 0) {
+      //ctx.clearRect(0, 0, canvas.width, canvas.height); // [vkom] commented it so that the message would appear above the game screen
+      ctx.font = "48px Arial";
+      //ctx.fillStyle = "#FFFFFF"; // [vkom] the message was not appeared - white BG and white font ahahahaha
+      ctx.fillText("GAME OVER", canvas.width / 2 - 150, canvas.height / 2);
+      return;
+    }
+	
+  });
+  
+  
+   
+  
+  }
+}
+
+
+      // Game setup
+      const canvas = document.getElementById('game-canvas');
+	  const game = new Game();// added by me for debuggonh [vkom] moved from line 174
+      const ctx = canvas.getContext('2d');
+      const asteroidImage = new Image();
+      asteroidImage.src = 'https://raw.githubusercontent.com/vkomianos/p5-asteroids-game/main/game-assets/asteroid-2.png';
+      const asteroid = new Asteroid(100, 100, 30, { x: 1, y: 1 }, asteroidImage);
+      const asteroids = [asteroid];
+
+	const spaceshipImage = new Image();
+spaceshipImage.src = 'https://raw.githubusercontent.com/vkomianos/p5-asteroids-game/main/game-assets/spaceship-2.png';
+const spaceship = new Spaceship(canvas.width / 2, canvas.height / 2, 30, spaceshipImage);
+
+	var score = 0; // code by chatgpt when i asked for score - copied selectively [vkom]
+	var lives = 3; // by chatGPT for lives [vkom]
+	var gameOver = false; // by chatGPT for lives  [vkom]
+
+
+	  function main() {
+      //const game = new Game();
+
+      function loop() 
+	  {
+       
+		// got from chatGPT for lives functionality - copied selectively [vkom] 
+		if (!gameOver) 
+		{
+			//update(); // did not work
+			//draw(); // did not work
+			
+			 game.update(); // took this line [vkom]
+			game.draw(); // took this line [vkom]
+			requestAnimationFrame(loop);
+		 }
+      }
+
+      loop();
+    }
+
+    main();
+	
+	function drawScore() {
+  ctx.font = "16px Arial";
+  ctx.fillStyle = "#fff";
+  ctx.fillText("Score: " + score, 8, 20);
+}
+	  
+    </script>
+  </body>
+</html>
