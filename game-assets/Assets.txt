@@ -1,9 +1,0 @@
-Asteroid image: https://freesvg.org/asteroid-no-shading
-Spaceship's image: https://www.seekpng.com/ipng/u2q8a9i1t4y3e6u2_spaceship-cartoon-clipart-library-clipart-rocket/
-Background image: https://commons.wikimedia.org/wiki/File:Buisson_crater_and_satellite_craters_AS12-51-7557.jpg
-Spaceship's engine sound: https://freesound.org/people/EnduringAutomotive/sounds/170248/
-Explosion sound: https://freesound.org/people/derplayer/sounds/587189/
-Missile image: https://freesvg.org/missile
-Load missiles sound: https://freesound.org/people/magnuswaker/sounds/522165/
-Space station window image: https://www.publicdomainpictures.net/en/free-download.php?image=space-station-window&id=179879
-Space station control panel: https://commons.wikimedia.org/wiki/File:S-IB_Networks_panel.jpg
